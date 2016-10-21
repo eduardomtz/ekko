@@ -55,10 +55,6 @@ def int2bytes(i):
     n = len(hex_string)
     return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 
-
-
-
-
 if __name__ == "__main__":
     estado = ''
     for i in range(1024):
@@ -71,5 +67,6 @@ if __name__ == "__main__":
 
     cintaObjetivo = text_to_bits("HOLA")
     cintaMaquina = maqTuring(estado, cintaEnBlanco, ciclos)
-    
+
+
     
