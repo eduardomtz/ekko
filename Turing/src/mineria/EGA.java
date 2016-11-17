@@ -72,6 +72,10 @@ public class EGA {
 	String G=genoma[i];
 	return G;
   }//endFenotipo
+  
+  public int getTamañoCinta() {
+      return tamañoCinta;
+  }
 
   // Dada una funcion de fitness, evalua a cada uno de los individuos
   private double Evalua(int num_individuo, FitnessEGA fitness) {

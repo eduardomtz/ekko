@@ -66,7 +66,7 @@ public class Turing {
             // String cad = "ABCDABCDABCD";
             int [] cadenaObjetivo = cadenaABinario(cad);
         
-            Fit f = new Fit(tamaño_cinta, cadenaObjetivo);
+            Fit f = new Fit(ega.getTamañoCinta(), cadenaObjetivo);
             mineria.Resultado res = ega.ejecutarAlgoritmoGenetico(f);
             
             System.out.println("Mejor Fitness: " + res.fitnessSemental);
