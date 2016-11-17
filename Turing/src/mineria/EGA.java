@@ -11,6 +11,7 @@ package mineria;
  */
 import java.io.*;
 import java.math.*;
+import java.util.Random;
 
 public class EGA {
     int tamañoCinta = 0;
@@ -41,7 +42,14 @@ public class EGA {
   public  double fitness[];
   public  BufferedReader Fbr,Kbr;
   
+  int seed = 12345;
+  Random generator;
 
+  public EGA()
+  {
+      generator = new Random(seed);
+  }
+  
   private void PoblacionInicial(String genoma[]){
 	/*
 	 *Genera N individuos aleatoriamente
@@ -50,7 +58,7 @@ public class EGA {
   		genoma[i]="";
                 // cada uno de longitud L
 		for (int j=1;j<=L;j++){
-			if (Math.random()<0.5)
+			if (generator.nextDouble()<0.5)
 				genoma[i]=genoma[i].concat("0");
 			else
 		  		genoma[i]=genoma[i].concat("1");
@@ -134,10 +142,10 @@ public class EGA {
   	int N_i,P;
 	String LI,MI,RI,LN,MN,RN;
 	for (int i=0;i<N_2;i++){
-		if (Math.random()>Pc) continue;
+		if (generator.nextDouble()>Pc) continue;
 		N_i=N-i-1;
 		
-                P=0; while (!(1<=P&P<=L_2-1)) P=(int)(Math.random()*L_2);
+                P=0; while (!(1<=P&P<=L_2-1)) P=(int)(generator.nextDouble()*L_2);
                 
 		LI=genoma[i  ].substring(0,P);
 		MI=genoma[i  ].substring(P,P+L_2);
@@ -153,8 +161,8 @@ public class EGA {
   private void Muta(String genoma[]) {
 	int nInd, nBit;
 	for (int i=1;i<=B2M;i++){
-		nInd=-1; while (nInd<0|nInd>=N) nInd=(int)(Math.random()*N);
-		nBit=-1; while (nBit<0|nBit>=L) nBit=(int)(Math.random()*L);
+		nInd=-1; while (nInd<0|nInd>=N) nInd=(int)(generator.nextDouble()*N);
+		nBit=-1; while (nBit<0|nBit>=L) nBit=(int)(generator.nextDouble()*L);
 /*
  *		** Mutation **
  */
@@ -211,6 +219,31 @@ public class EGA {
           CalcParams();
   }//endsetParams
   
+  public void setParams(int num, double valor){
+      switch(num){
+          case 1:
+              N = (int)valor;
+              break;
+          case 2:
+              Pc = valor;
+              break;
+          case 3:
+              Pm = valor;
+              break;
+          case 4:
+              G = (int)valor;
+              break;
+          case 5:
+              tamañoCinta = (int)valor;
+              break;
+          case 6:
+              seed = (int)valor;
+              generator = new Random(seed);
+              break;
+      }
+      CalcParams();
+  }
+  
   public void DispParams() {
 	System.out.println();
 	System.out.println("1) Numero de individuos:    "+ N);
@@ -219,7 +252,8 @@ public class EGA {
 	System.out.printf ("3) Prob. de mutacion:       %8.6f\n",Pm);
 	System.out.println("4) Numero de generaciones:  "+ G);
         System.out.println("5) Tamaño de la cinta: " + tamañoCinta);
-	System.out.println("5) Minimiza[0]/Maximiza[1]: "+MM);
+	System.out.println("** Fitness Minimiza[0]: "+ MM);
+        System.out.println("6) Semilla de números aleatorios: " + seed);
   }//endDispParams
 
   private boolean CheckParams(int Opcion) {

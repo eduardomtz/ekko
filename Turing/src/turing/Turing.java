@@ -31,10 +31,6 @@ public class Turing {
 	MM= minimiza; 0 minimiza / 1 maximiza
         */
         
-        
-        
-        
-        
         int N = 500;
         int E = 1024;
         int D = 0;
@@ -53,20 +49,26 @@ public class Turing {
         
         System.out.println("Calcular la complejidad de Kolmogorov para una cadena indicada");
         System.out.println("Parametros del algoritmo genético ");
-        ega.DispParams();
-        System.out.println("");
-        System.out.print("Introduce una cadena: ");
-        
+        String cad;
         try {
-            String cad = Kbr.readLine();
+            do{
+                ega.DispParams();
+                System.out.println("");
+                System.out.print("Introduce una cadena o @Parametro NuevoValor: ");
+                cad = Kbr.readLine();
+                if(cad.contains("@")){
+                    String[] valores = cad.split(" ");
+                    int num = Integer.parseInt(valores[0].substring(1));
+                    double val = Double.parseDouble(valores[1]);
+                    ega.setParams(num, val);
+                }
+            }while (cad.contains("@"));
             // String cad = "ABCDABCDABCD";
             int [] cadenaObjetivo = cadenaABinario(cad);
         
-            
-
             Fit f = new Fit(tamaño_cinta, cadenaObjetivo);
-            
             mineria.Resultado res = ega.ejecutarAlgoritmoGenetico(f);
+            
             System.out.println("Mejor Fitness: " + res.fitnessSemental);
             System.out.println("Cadena objetivo: " + BinarioACadena(cadenaObjetivo));
             System.out.println("Cadena original, codificada:");
